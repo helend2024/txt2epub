@@ -2,101 +2,51 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="jszip.min.js"></script>
     <script src="FileSaver.min.js"></script>
-    <style>
-        .parameters {
-            max-width: 800px;
-            width: 100%;
-            min-width: 100px;
-            margin: 0 auto;
-            background-color: #c8ccc9;
-            padding: 0.4em 1em;
-            border: 1px solid #ccc;
-            border-radius: 1.5em;
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        }
-
-        label {
-            font-size: 2em;
-            cursor: pointer;
-            margin: 1em 1em;
-            width: 80%;
-        }
-
-        input {
-
-            font-size: 3em;
-            cursor: pointer;
-            margin: 1em 1em;
-            text-align: right;
-        }
-
-        select {
-
-            font-size: 3em;
-            cursor: pointer;
-            margin: 1em 1em;
-            text-align: right;
-        }
-
-        #input-file {
-            width: 80%;
-        }
-
-        button {
-            text-align: right;
-            margin-right: 0;
-            margin-left: auto;
-            display: block;
-            font-size: 4em;
-        }
-
-        #file-split {
-            height: 150px;
-            font-size: 5em;
-        }
-
-        .btn-arrow {
-            font-size: 9em;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-    <div class="parameters">
-        <div>
-            <label for="input-file">选择文件:</label><br>
-            <input type="file" id="input-file" accept=".txt"/>
-        </div>
-        <div>
-            <label for="encoding">文件编码:</label><br>
-            <select id="encoding" name="encoding">
-                <option value="UTF-8">UTF-8</option>
-                <option value="GB2312">GB2312</option>
-            </select>
+    <div class="form-container">
+        <form>
+            <div class="form-group">
+                <label for="input-file">选择文件:</label><br>
+                <input type="file" id="input-file" accept=".txt"/>
+            </div>
+            
+            <div class="form-group">
+                <label for="encoding">文件编码:</label><br>
+                <select id="encoding" name="encoding">
+                    <option value="UTF-8">UTF-8</option>
+                    <option value="GB2312">GB2312</option>
+                </select>
+            </div>
 
-        </div>
+            <div class="form-group">
+                <label for="file-split">分割文件数:</label><br>
+                <input type="number" min="1" max="50" id="file-split" name="file-split" value="10" step="1">
+                <!-- <span class="btn-arrow" onClick="updateValue('#file-split','subtract', 1)">▽</span>&nbsp&nbsp
+                <span class="btn-arrow" onClick="updateValue('#file-split','add', 1)">△</span> -->
+            </div>
 
-        <div>
-            <label for="file-split">分割文件数:</label><br>
-            <!-- <input type="text" id="file-split" name="file-split" value="10"> -->
-
-            <input type="number" min="1" max="50" id="file-split" name="file-split" value="10" step="1">
-            <span class="btn-arrow" onClick="updateValue('#file-split','subtract', 1)">▽</span>&nbsp&nbsp
-            <span class="btn-arrow" onClick="updateValue('#file-split','add', 1)">△</span>
-        </div>
-        <div>
-            <button id="submit" type="button">点这里!</button>
-        </div>
-
+            <div class="form-group button-group">
+                <button id="submit" type="button">点这里!</button>
+            </div>
+            <div  class="form-group">
+                
+            </div>
+        </form>
     </div>
-    <h3>文件头10行：</h3>
-    <div id="file-rows"></div>
-    <h3>输出文件：</h3>
-    <div id="file-target"></div>
-    <h3>目录：</h3>
-    <div id="content-target"></div>
+    <div class="output-container">
+        <h3>文件头10行：</h3>
+        <div  class="output" id="file-rows"></div>
+        <h3>输出文件：</h3>
+        <div  class="output" id="file-target"></div>
+        <h3>目录：</h3>
+        <div class="output" id="content-target"></div>
+    </div>
     <script>
 
         const updateValue = (qry, type, value) => {
