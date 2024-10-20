@@ -136,15 +136,23 @@ function load_fulltext(data) {
     // let ele = document.querySelector("#content-target");
 
     let texts = data.split(/\r?\n/);
-    let cap_match = new RegExp("^(?:\d+|.{0,2}(第.{1,10}(章|节)|楔子|引子))");
+    let cap_matchs = [new RegExp("^.{0,2}(第.{1,10}(章|节)|楔子|引子)"),
+        new RegExp("^\\d+")];
     let chapters = [];
     let chapter_title = "";
     let chapter_id = 0;
     let chapter_content_previous = "";
     for (let i = 0; i < texts.length; i++) {
         let text_i = texts[i].trim();
+        let is_match = false;
+        for (let j = 0; j < cap_matchs.length; j++) {
+            if (text_i.match(cap_matchs[j])) {
+                is_match = true;
+                break;
+            } 
+        }
         // if find a new chapter
-        if (text_i.match(cap_match)) {
+        if (is_match) {
             if (chapter_id > 0) {
                 chapters.push({
                     title: chapter_title,
