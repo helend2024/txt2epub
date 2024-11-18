@@ -136,8 +136,11 @@ function load_fulltext(data) {
     // let ele = document.querySelector("#content-target");
 
     let texts = data.split(/\r?\n/);
-    let cap_matchs = [new RegExp("^.{0,2}(第.{1,10}(章|节)|楔子|引子)"),
-        new RegExp("^\\d+")];
+    // let cap_matchs = [new RegExp("^.{0,2}(第.{1,10}(章|节)|楔子|引子)"),
+    //     new RegExp("^\\d+")];
+
+    const regex = document.getElementById('regex').value;
+    let cap_matchs = [new RegExp(regex)];
     let chapters = [];
     let chapter_title = "";
     let chapter_id = 0;

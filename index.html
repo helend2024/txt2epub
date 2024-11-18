@@ -32,6 +32,15 @@
                 <span class="btn-arrow" onClick="updateValue('#file-split','add', 1)">△</span> -->
             </div>
 
+            <div class="form-group">
+                <label for="regex">正则表达式:</label><br>
+                <select id="regex" name="regex">
+                    <option value="^.{0,2}(第.{1,10}(章|节)|楔子|引子)">^.{0,2}(第.{1,10}(章|节)|楔子|引子)</option>
+                    <option value="\\d+">\\d+</option>
+                </select>
+            </div>
+
+
             <div class="form-group button-group">
                 <button id="submit" type="button">点这里!</button>
             </div>
