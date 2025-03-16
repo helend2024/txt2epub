@@ -86,7 +86,7 @@ function update_file_div(files) {
     content_html += "<p>文件数 " + get_file_number() + "</p>";
 
 
-    content_html += "<table>";
+    content_html += "<table class='responsive-table'>";
     content_html += "<tr>";
     content_html += "    <th>文件名</th>";
     content_html += "    <th>开始</th>";
@@ -103,19 +103,29 @@ function update_file_div(files) {
 
     ele.innerHTML = content_html;
 }
+function getTextAfterHtmlTags(str) {
+    const textContent = str.replace(/<[^>]*>/g, '');
+    return textContent.slice(0, 30) + "...";
+}
+
+
 // Update information for chapters
 function update_chapter_div(chapters) {
     let ele = document.querySelector("#content-target");
 
     let content_html = "";
 
-    content_html += "<p>章节数 <strong>" + chapters.length + "</strong>";
+    content_html += "<p>章节数 <strong>" + chapters.length + "</strong></p>";
 
-    content_html += "<ul>";
+    content_html += "<table class='responsive-table'>";
+    content_html += "<tr><td>章节</td><td>内容</td></tr>";
     for (let i = 0; i < chapters.length; i++) {
-        content_html += '<li>' + chapters[i].title + '</li>';
+        content_html += "<tr>";
+        content_html += '<td>' + chapters[i].title + '</td>';
+        content_html += '<td>' + getTextAfterHtmlTags(chapters[i].content) + '</td>';
+        content_html += "</tr>"
     }
-    content_html += "</ul>";
+    content_html += "</table>";
     ele.innerHTML = content_html;
 }
 function readFileContent(file, encoding = "UTF-8") {
@@ -126,6 +136,11 @@ function readFileContent(file, encoding = "UTF-8") {
         reader.readAsText(file, encoding)
     })
 }
+
+function hasMoreThanOnePrintableChar(str) {
+    return /[\p{L}\p{N}\p{P}\p{S}].*[\p{L}\p{N}\p{P}\p{S}]/u.test(str);
+}
+
 function load_fulltext(data) {
     // const response = await fetch(path);
     // if (!response.ok) {
@@ -156,7 +171,11 @@ function load_fulltext(data) {
         }
         // if find a new chapter
         if (is_match) {
+            
             if (chapter_id > 0) {
+                if (chapter_content_previous === "") {
+                    continue;
+                }
                 chapters.push({
                     title: chapter_title,
                     content: chapter_content_previous
@@ -167,6 +186,12 @@ function load_fulltext(data) {
             chapter_content_previous = "";
         } else {
             chapter_content_previous += "<p>" + text_i + "</p>\n";
+        }
+        if (i === texts.length - 1) {
+            chapters.push({
+                title: chapter_title,
+                content: chapter_content_previous
+            })
         }
     }
     return (chapters);
