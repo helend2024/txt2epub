@@ -90,15 +90,13 @@ input[type="number"] {
     text-align: left;
 }
 
-
-
 /* Basic table style */
 .responsive-table {
     width: 100%;
     border-collapse: collapse;
     margin: 20px 0;
     font-size: 16px;
-    text-align: left;
+    text-align: left; /* Align all content to the left */
     background-color: #f9f9f9;
     border-radius: 8px;
     overflow: hidden; /* To round corners of table */
@@ -114,6 +112,7 @@ input[type="number"] {
 .responsive-table th, .responsive-table td {
     padding: 12px 15px;
     border: 1px solid #ddd;
+    text-align: left; /* Ensure all text is left-aligned */
 }
 
 /* Row hover effect */
@@ -154,10 +153,9 @@ input[type="number"] {
 
     .responsive-table td {
         display: block;
-        text-align: right;
+        text-align: left; /* Align content left on mobile */
         font-size: 14px;
         border-bottom: 1px dotted #ddd;
-        padding-left: 50%;
         position: relative;
     }
 
