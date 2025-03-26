@@ -118,10 +118,11 @@ function update_chapter_div(chapters) {
     content_html += "<p>章节数 <strong>" + chapters.length + "</strong></p>";
 
     content_html += "<table class='responsive-table'>";
-    content_html += "<tr><td>章节</td><td>内容</td></tr>";
+    content_html += "<tr><td>章节</td><td>字数</td><td>内容</td></tr>";
     for (let i = 0; i < chapters.length; i++) {
         content_html += "<tr>";
         content_html += '<td>' + chapters[i].title + '</td>';
+        content_html += '<td>' + chapters[i].content.length + '</td>';
         content_html += '<td>' + getTextAfterHtmlTags(chapters[i].content) + '</td>';
         content_html += "</tr>"
     }
