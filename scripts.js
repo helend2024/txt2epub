@@ -63,6 +63,7 @@ async function readRows(target, file) {
 async function placeFileContent(target, file) {
     const encoding = document.getElementById('encoding').value;
     await readFileContent(file, encoding).then(content => {
+        content = content.replace(/^\s*(\d+)\s+(.*)$/gm, '第$1章 $2');
         let chapters = load_fulltext(content);
         filename = file.name.replace("\.txt", "");
 
